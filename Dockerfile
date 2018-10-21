@@ -51,7 +51,6 @@ RUN CONFIG="\
     && ./configure $CONFIG \
     && make -j$(getconf _NPROCESSORS_ONLN) \
     && make install \
-    && cp php.ini-production /usr/local/php/etc/php.ini \
     && ln -s /usr/local/php/bin/php /usr/bin/php \
     && ln -s /usr/local/php/bin/php-cgi /usr/bin/php-cgi \
     && ln -s /usr/local/php/bin/php-config /usr/bin/php-config \
@@ -64,5 +63,6 @@ RUN CONFIG="\
 COPY ./config/php-fpm.conf /usr/local/php/etc/php-fpm.conf
 COPY ./config/www.conf /usr/local/php/etc/php-fpm.d/www.conf
 COPY ./config/nginx.fpm.conf /etc/nginx/conf.d/default.conf
+COPY ./config/php.ini /usr/local/php/etc/php.ini
 
 ENTRYPOINT php-fpm && nginx -g "daemon off;"
